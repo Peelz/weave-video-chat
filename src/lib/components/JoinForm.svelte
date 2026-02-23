@@ -9,6 +9,30 @@
   let isLoading = false;
   let error = '';
 
+  function decodeJWT(token: string): any {
+    const base64Url = token.split('.')[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  }
+
+  $: if (token) {
+    try {
+      const decoded = decodeJWT(token);
+      if (decoded?.grants?.video?.room) {
+        roomName = decoded.grants.video.room;
+      }
+    } catch (e) {
+      console.error('Failed to decode token', e);
+    }
+  }
+
   async function handleSubmit() {
     if (!token || !roomName) {
       error = 'Please fill in all fields';
@@ -57,8 +81,9 @@
           id="roomName"
           type="text"
           bind:value={roomName}
-          placeholder="Enter room name"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Room name will be extracted from token"
+          readonly
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none bg-gray-100 text-gray-600"
         />
       </div>
 
