@@ -55,7 +55,7 @@
 
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center">Join Video Room</h1>
+    <h1 class="text-2xl font-bold mb-6 text-center">Join Video & Chat</h1>
     
     {#if error}
       <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -92,7 +92,7 @@
         disabled={isLoading}
         class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition-colors"
       >
-        {isLoading ? 'Connecting...' : 'Join Room'}
+        {isLoading ? 'Connecting...' : 'Join Video & Chat'}
       </button>
     </form>
   </div>

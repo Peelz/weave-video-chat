@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { chatStore, addChatMessage, clearChatMessages } from '$lib/stores/chat';
+  import { chatStore, clearChatMessages } from '$lib/stores/chat';
+  import { sendChatMessage } from '$lib/services/twilio';
   import type { ChatMessage } from '$lib/types/twilio';
   import { onDestroy } from 'svelte';
 
@@ -11,24 +12,10 @@
     chatMessages = value;
   });
 
-  function generateMessageId(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  }
-
   function sendMessage() {
     if (!newMessage.trim()) return;
-
-    const message: ChatMessage = {
-      id: generateMessageId(),
-      author: 'You',
-      body: newMessage.trim(),
-      timestamp: new Date(),
-      isLocal: true,
-    };
-
-    addChatMessage(message);
+    sendChatMessage(newMessage.trim());
     newMessage = '';
-
     if (chatContainer) {
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }

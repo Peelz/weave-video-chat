@@ -84,7 +84,7 @@
   <div class="flex-1 flex overflow-hidden">
     <div class="flex-1 p-4 overflow-y-auto">
       <div class="mb-4">
-        <h2 class="text-white mb-2">You</h2>
+        <h2 class="text-white mb-2">You ({room.localParticipant.identity})</h2>
         <div class="relative bg-black rounded-lg overflow-hidden aspect-video">
           <video
             bind:this={localVideoElement}
